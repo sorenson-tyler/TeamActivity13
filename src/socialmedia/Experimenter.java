@@ -12,7 +12,7 @@ import java.util.Set;
  * 
  * @author sburton
  */
-public class Experimenter {
+public abstract class Experimenter {
     
     /**
      * Runs the Experiment and outputs the results
@@ -116,7 +116,7 @@ public class Experimenter {
         Map<SocialMediaEntry, Boolean> results = new HashMap<>();
         
         // Right now this is putting a "true" for everything
-        results = RandomClassifier(testSet, results);
+        results = classify(testSet, results);
         
         return results;
     }
@@ -152,24 +152,8 @@ public class Experimenter {
         
         System.out.println("\nAccuracy: " + percent);
     }
-    
-    public Map<SocialMediaEntry, Boolean> RandomClassifier
-        (Set<SocialMediaEntry> testSet, 
-                Map<SocialMediaEntry, Boolean> results) {
-            Random random = new Random();
-            
-            for (SocialMediaEntry entry : testSet) {
-                results.put(entry, random.nextBoolean());
-            }
-            return results;
-    }
-        
-    public Map<SocialMediaEntry, Boolean> TrueClassifier
-        (Set<SocialMediaEntry> testSet, 
-                Map<SocialMediaEntry, Boolean> results) {            
-            for (SocialMediaEntry entry : testSet) {
-                results.put(entry, true);
-            }
-            return results;
-    }
+
+    abstract Map<SocialMediaEntry, Boolean> classify(Set<SocialMediaEntry> testSet, 
+                Map<SocialMediaEntry, Boolean> results);
+
 }
