@@ -4,6 +4,7 @@ package socialmedia;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -115,10 +116,7 @@ public class Experimenter {
         Map<SocialMediaEntry, Boolean> results = new HashMap<>();
         
         // Right now this is putting a "true" for everything
-        // TODO: This method will need to be changes / replaced.
-        for (SocialMediaEntry entry : testSet) {
-            results.put(entry, true);
-        }
+        results = RandomClassifier(testSet, results);
         
         return results;
     }
@@ -153,5 +151,25 @@ public class Experimenter {
         float percent = (float) correct / total * 100;
         
         System.out.println("\nAccuracy: " + percent);
+    }
+    
+    public Map<SocialMediaEntry, Boolean> RandomClassifier
+        (Set<SocialMediaEntry> testSet, 
+                Map<SocialMediaEntry, Boolean> results) {
+            Random random = new Random();
+            
+            for (SocialMediaEntry entry : testSet) {
+                results.put(entry, random.nextBoolean());
+            }
+            return results;
+    }
+        
+    public Map<SocialMediaEntry, Boolean> TrueClassifier
+        (Set<SocialMediaEntry> testSet, 
+                Map<SocialMediaEntry, Boolean> results) {            
+            for (SocialMediaEntry entry : testSet) {
+                results.put(entry, true);
+            }
+            return results;
     }
 }
